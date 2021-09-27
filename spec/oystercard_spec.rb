@@ -31,6 +31,29 @@ describe Oystercard do
       expect { subject.deduct 3 }.to change{ subject.balance }.by -3
     end
   end
+
+  describe '#touch in/out support' do
+
+    it 'is not in journey by default' do
+      expect(subject.in_journey).to eq false
+    end
+
+    context 'touch in' do
+      it 'updates in_journey value' do
+        subject.touch_in
+        expect(subject).to be_in_journey
+      end
+    end
+
+    context 'touch out' do
+      it 'updates in_journey value' do
+        subject.touch_in
+        subject.touch_out
+        expect(subject).not_to be_in_journey
+      end
+    end
+
+  end
   
 
     
