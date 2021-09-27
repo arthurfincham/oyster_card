@@ -22,16 +22,6 @@ describe Oystercard do
     end
   end
 
-  describe "#deduct" do 
-
-    it { is_expected.to respond_to(:deduct).with(1).argument }
-
-    it "deducts an amount from the card's balance" do
-      subject.top_up(10)
-      expect { subject.deduct 3 }.to change{ subject.balance }.by -3
-    end
-  end
-
   describe '#touch in/out support' do
 
     it 'is not in journey by default' do
@@ -52,11 +42,19 @@ describe Oystercard do
     end
 
     context 'touch out' do
-      it 'updates in_journey value' do
+
+      before do
         subject.top_up(5) 
         subject.touch_in
+      end
+      
+      it 'updates in_journey value' do
         subject.touch_out
         expect(subject).not_to be_in_journey
+      end
+
+      it 'deducts a fee for the journey' do
+        expect{ subject.touch_out }.to change{ subject.balance }.by -Oystercard::FEE
       end
     end
 
