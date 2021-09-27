@@ -38,15 +38,22 @@ describe Oystercard do
       expect(subject.in_journey).to eq false
     end
 
-    context 'touch in' do
+    context 'touch in'  do
+      
       it 'updates in_journey value' do
+        subject.top_up(5)
         subject.touch_in
         expect(subject).to be_in_journey
+      end
+
+      it 'expects to raise error if card balance is < 1£' do
+        expect{ subject.touch_in }.to raise_error('Not enough money')
       end
     end
 
     context 'touch out' do
       it 'updates in_journey value' do
+        subject.top_up(5) 
         subject.touch_in
         subject.touch_out
         expect(subject).not_to be_in_journey

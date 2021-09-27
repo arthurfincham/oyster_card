@@ -4,7 +4,7 @@ class Oystercard
   attr_reader :in_journey
 
   LIMIT = 90
-  FEE = 2 
+  FEE = 1 
 
   def initialize
     @balance = 0
@@ -25,6 +25,7 @@ class Oystercard
   end
 
   def touch_in
+    raise 'Not enough money' if @balance < FEE
     @in_journey = true
   end
 
