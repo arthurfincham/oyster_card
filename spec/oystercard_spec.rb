@@ -9,10 +9,16 @@ describe Oystercard do
   end
  
   describe "#top_up" do
-    it { is_expected.to respond_to(:top_up).with(1).argument } 
+    it { is_expected.to respond_to(:top_up).with(1).argument }
+
     it 'tops up the balance to a passed value' do 
       subject.top_up(10)
       expect(subject.balance).to eq 10
+    end
+
+    it 'throws an error if limit would be exceeded' do
+      card_limit = Oystercard::LIMIT
+      expect { subject.top_up(card_limit + 1) }.to raise_error("Too much! Top up limit is £#{Oystercard::LIMIT}")
     end
   end
   
