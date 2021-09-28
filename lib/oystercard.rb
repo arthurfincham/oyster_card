@@ -3,7 +3,7 @@ require_relative 'journey'
 class Oystercard
 
   attr_accessor :balance
-  attr_reader :entry_station, :journey_history, :j
+  attr_reader :entry_station, :journey_history
 
   LIMIT = 90
   FEE = 1 
@@ -12,7 +12,7 @@ class Oystercard
   def initialize
     @balance = 0
     @entry_station = nil
-    @journey_history = {}
+    @journey_history = []
   end
 
   def top_up(value)
@@ -27,14 +27,13 @@ class Oystercard
   def touch_in(station)
     raise 'Not enough money' if @balance < FEE
     @entry_station = station
-    @j = Journey.new(station)
-    
+    @jorn = Journey.new(station)
   end
 
   def touch_out(station)
-    @journey_history.store(@entry_station, station)
+    @jorn.exit_station = station
+    @journey_history << @jorn
     @entry_station = nil
-    @j.exit_station = station
     deduct
   end
 
