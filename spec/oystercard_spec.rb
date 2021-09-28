@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   let(:station){ double :station } 
+
    it 'expects the card to remember the entry station after the touch in ' do 
     subject.top_up(5)
     subject.touch_in(station)
@@ -31,19 +32,19 @@ describe Oystercard do
   describe '#touch in/out support' do
 
     it 'is not in journey by default' do
-      expect(subject.in_journey).to eq false
+      expect(subject.entry_station).to eq nil
     end
 
     context 'touch in'  do
       
       it 'updates in_journey value' do
         subject.top_up(5)
-        subject.touch_in
+        subject.touch_in(station)
         expect(subject).to be_in_journey
       end
 
       it 'expects to raise error if card balance is < 1£' do
-        expect{ subject.touch_in }.to raise_error('Not enough money')
+        expect{ subject.touch_in(station) }.to raise_error('Not enough money')
       end
     end
 
@@ -51,7 +52,7 @@ describe Oystercard do
 
       before do
         subject.top_up(5) 
-        subject.touch_in
+        subject.touch_in(station)
       end
       
       it 'updates in_journey value' do

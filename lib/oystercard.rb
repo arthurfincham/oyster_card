@@ -16,9 +16,8 @@ class Oystercard
     @balance += value
   end
 
-  def in_journey
-
-    @in_journey
+  def in_journey?
+    @entry_station != nil
   end
 
   def touch_in(station)
@@ -27,7 +26,7 @@ class Oystercard
   end
 
   def touch_out
-    @in_journey = false
+    @entry_station = nil
     deduct
   end
 
