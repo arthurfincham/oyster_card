@@ -3,15 +3,13 @@ require 'oystercard'
 describe Oystercard do
   let(:station){ double :station } 
 
-   it 'expects the card to remember the entry station after the touch in ' do 
-    subject.top_up(5)
-    subject.touch_in(station)
-    expect(subject.entry_station).to eq station
-   end
-
   context '#configuration' do
     it 'has default balance of 0' do
     expect(subject.balance).to eq 0
+    end
+
+    it 'checks that the card has an empty list of journeys by default' do
+      expect(subject.journey_history).to be_empty
     end
   end
  
@@ -46,6 +44,12 @@ describe Oystercard do
       it 'expects to raise error if card balance is < 1£' do
         expect{ subject.touch_in(station) }.to raise_error('Not enough money')
       end
+
+      it 'expects the card to remember the entry station after the touch in ' do 
+        subject.top_up(5)
+        subject.touch_in(station)
+        expect(subject.entry_station).to eq station
+      end
     end
 
     context 'touch out' do
@@ -56,12 +60,16 @@ describe Oystercard do
       end
       
       it 'updates in_journey value' do
-        subject.touch_out
+        subject.touch_out(station)
         expect(subject).not_to be_in_journey
       end
 
       it 'deducts a fee for the journey' do
-        expect{ subject.touch_out }.to change{ subject.balance }.by -Oystercard::FEE
+        expect{ subject.touch_out(station) }.to change{ subject.balance }.by -Oystercard::FEE
+      end
+
+      it 'Write a test that checks that touching in and out creates one journey' do
+       expect{subject.touch_out(station)}.to change {subject.journey_history.length}.by (1)
       end
     end
 
