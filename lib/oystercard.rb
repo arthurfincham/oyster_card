@@ -38,4 +38,4 @@ class Oystercard
     @balance -= fee
   end
 
-end
+end 
