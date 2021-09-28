@@ -1,6 +1,12 @@
 require 'oystercard'
 
 describe Oystercard do
+  let(:station){ double :station } 
+   it 'expects the card to remember the entry station after the touch in ' do 
+    subject.top_up(5)
+    subject.touch_in(station)
+    expect(subject.entry_station).to eq station
+   end
 
   context '#configuration' do
     it 'has default balance of 0' do
