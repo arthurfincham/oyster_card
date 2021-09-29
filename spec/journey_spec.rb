@@ -2,22 +2,18 @@ require 'journey'
 
 describe Journey do
 
-  # let(:station){ double :station }
   context '#attributes' do
-    
-    it 'has required attributes' do
-      station = double("Station")
-      journey = Journey.new(station)
-      expect(journey).to have_attributes(:entry_station => station, :exit_station => nil)
-    end                                        
-  end
+    it 'entry station defaults to nil' do
+      expect(subject.entry_station).to be_nil
+    end
 
-  context '#tap_out' do
-    it 'completes the instance of journey' do
-      oyster = double("Oyster", :tap_out)
-      journey = Journey.new(station)
-      oyster.tap_out(station)
-      expect(journey.exit_station).to eq station
+    it 'exit station defaults to nil' do
+      expect(subject.exit_station).to be_nil
+    end
+
+    it 'complete defaults to false' do
+      expect(subject.complete).to be_falsey
     end
   end
+    
 end
