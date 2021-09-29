@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 require 'oystercard'
 
 describe Oystercard do
-  let(:station){ double :station } 
+  let(:station) { double :station }
 
   context '#configuration' do
     it 'has default balance of 0' do
-    expect(subject.balance).to eq 0
+      expect(subject.balance).to eq 0
     end
 
     it 'checks that the card has an empty list of journeys by default' do
       expect(subject.journey_history).to be_empty
     end
   end
- 
-  describe "#top_up" do
+
+  describe '#top_up' do
     it { is_expected.to respond_to(:top_up).with(1).argument }
 
-    it 'tops up the balance to a passed value' do 
+    it 'tops up the balance to a passed value' do
       subject.top_up(10)
       expect(subject.balance).to eq 10
     end
@@ -27,54 +29,26 @@ describe Oystercard do
     end
   end
 
-  describe '#touch in/out support' do
+  describe '#touch_in' do
+    let(:journey) { double :journey, entry_station: station, complete?: false }
 
-    it 'is not in journey by default' do
-      expect(subject.entry_station).to eq nil
+    it 'expects to raise error if card balance is < 1£' do
+      expect { subject.touch_in(station) }.to raise_error('Not enough money')
     end
-
-    context 'touch in'  do
-      
-      it 'updates in_journey value' do
-        subject.top_up(5)
-        subject.touch_in(station)
-        expect(subject).to be_in_journey
-      end
-
-      it 'expects to raise error if card balance is < 1£' do
-        expect{ subject.touch_in(station) }.to raise_error('Not enough money')
-      end
-
-      it 'expects the card to remember the entry station after the touch in ' do 
-        subject.top_up(5)
-        subject.touch_in(station)
-        expect(subject.entry_station).to eq station
-      end
-    end
-
-    context 'touch out' do
-
-      before do
-        subject.top_up(5) 
-        subject.touch_in(station)
-      end
-      
-      it 'updates in_journey value' do
-        subject.touch_out(station)
-        expect(subject).not_to be_in_journey
-      end
-
-      it 'deducts a fee for the journey' do
-        expect{ subject.touch_out(station) }.to change{ subject.balance }.by -Oystercard::FEE
-      end
-
-      it 'Write a test that checks that touching in and out creates one journey' do
-       expect{subject.touch_out(station)}.to change {subject.journey_history.length}.by (1)
-      end
-    end
-
   end
-  
 
-    
+  describe '#touch out' do
+    before do
+      subject.top_up(5)
+      subject.touch_in(station)
+    end
+
+    it 'deducts a fee for the journey' do
+      expect { subject.touch_out(station) }.to change { subject.balance }.by(-Journey::FEE)
+    end
+
+    it 'Write a test that checks that touching in and out creates one journey' do
+      expect { subject.touch_out(station) }.to change { subject.journey_history.length }.by(1)
+    end
+  end
 end
