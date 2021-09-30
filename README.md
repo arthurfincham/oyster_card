@@ -2,9 +2,7 @@
 
 <img src="assets/oyster.jpeg" width="600px">
 
-<!-- &nbsp; -->
-
-<h1>oyster_card</h1>
+&nbsp;
 
 #### *travel across London through IRB*
 
