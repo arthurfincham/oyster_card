@@ -1,28 +1,38 @@
 # frozen_string_literal: true
 
+require 'oystercard'
+
 class Journey
-  attr_accessor :entry_station, :exit_station, :complete
+  attr_accessor :entry_station, :exit_station
 
   FEE = 1
   PENALTY = 5
 
-  def initialize(entry_station = nil)
-    @entry_station = entry_station
+  def initialize
+    @entry_station = nil
     @exit_station = nil
-    @complete = false
+  end
+
+  def start(station)
+    @entry_station = station
   end
 
   def finish(station)
     @exit_station = station
-    @complete = true
     self
   end
 
   def fare
-    penalty? ? FEE + PENALTY : FEE
+    if complete?
+      FEE
+    else
+      FEE + PENALTY
+    end
   end
 
-  def penalty?
-    (!entry_station || !exit_station) 
+  def complete?
+    @entry_station && @exit_station
   end
+
+  
 end

@@ -19,14 +19,15 @@ class Oystercard
     @balance += value
   end
 
-  def touch_in(station)
+  def touch_in(station = nil)
     raise 'Not enough money' if @balance < Journey::FEE
-
-    @journey = Journey.new(station)
+    @journey = Journey.new
+    @journey.start(station)
   end
 
-  def touch_out(station)
+  def touch_out(station = nil)
     @journey.finish(station)
+    @journey.complete?
     @journey_history << @journey
     deduct
   end
@@ -36,4 +37,5 @@ class Oystercard
   def deduct
     @balance -= @journey.fare
   end
+
 end
