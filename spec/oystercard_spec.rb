@@ -11,7 +11,7 @@ describe Oystercard do
     end
 
     it 'checks that the card has an empty list of journeys by default' do
-      expect(subject.journey_history).to be_empty
+      expect(subject.journey_log.journeys).to be_empty
     end
   end
 
@@ -45,10 +45,6 @@ describe Oystercard do
 
     it 'deducts a fee for the journey' do
       expect { subject.touch_out(station) }.to change { subject.balance }.by(-Journey::FEE)
-    end
-
-    it 'Write a test that checks that touching in and out creates one journey' do
-      expect { subject.touch_out(station) }.to change { subject.journey_history.length }.by(1)
     end
   end
 end

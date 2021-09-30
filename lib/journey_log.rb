@@ -1,3 +1,5 @@
+require 'oystercard'
+require 'journey'
 class JourneyLog
    
   attr_reader :journeys  
@@ -8,11 +10,11 @@ class JourneyLog
   end
 
   def start(station)
-    @journeys << @journey_class.new(entry_station: station)
+    @journeys << @journey_class.new(station)
   end
 
   def finish(station)
-    @journeys.last.exit_station = station
+    @journeys.last.finish(station)
   end
 
 end

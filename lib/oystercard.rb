@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 require_relative 'journey'
+require_relative 'journey_log'
 
 class Oystercard
   attr_accessor :balance
-  attr_reader :journey_history
+  attr_reader :journey_log
 
   LIMIT = 90
 
-  def initialize
+  def initialize(journey_log: JourneyLog.new)
     @balance = 0
-    @journey_history = []
+    @journey_log = journey_log
   end
 
   def top_up(value)
@@ -21,21 +22,18 @@ class Oystercard
 
   def touch_in(station = nil)
     raise 'Not enough money' if @balance < Journey::FEE
-    @journey = Journey.new
-    @journey.start(station)
+    @journey_log.start(station)
   end
 
   def touch_out(station = nil)
-    @journey.finish(station)
-    @journey.complete?
-    @journey_history << @journey
+    @journey_log.finish(station)
     deduct
   end
 
   private
 
   def deduct
-    @balance -= @journey.fare
+    @balance -= @journey_log.journeys.last.fare
   end
 
 end

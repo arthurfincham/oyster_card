@@ -3,18 +3,14 @@
 require 'oystercard'
 
 class Journey
-  attr_accessor :entry_station, :exit_station
+  attr_accessor :entry_station, :exit_station, :fare
 
   FEE = 1
   PENALTY = 5
 
-  def initialize
-    @entry_station = nil
+  def initialize(entry_station = nil)
+    @entry_station = entry_station
     @exit_station = nil
-  end
-
-  def start(station)
-    @entry_station = station
   end
 
   def finish(station)
@@ -31,7 +27,11 @@ class Journey
   end
 
   def complete?
-    @entry_station && @exit_station
+    if (@entry_station == nil) or (@exit_station == nil)
+      false
+    else
+      true
+    end
   end
 
   
