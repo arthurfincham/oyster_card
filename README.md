@@ -2,9 +2,10 @@
 
 <img src="assets/oyster.jpeg" width="600px">
 
-&nbsp;
+<!-- &nbsp; -->
 
-# oyster_card
+<h1>oyster_card</h1>
+
 #### *travel across London through IRB*
 
 ![](https://img.shields.io/github/last-commit/arthurfincham/oyster_card)
@@ -15,14 +16,14 @@
 
 </div>
 
-### Install
+## Install
 
 To install:
 ``` bash
 % git clone https://github.com/arthurfincham/oyster_card
 ```
 
-### Usage
+## Usage
 
 This program is designed to be run in IRB, Ruby's native REPL.
 
@@ -37,7 +38,7 @@ Begin by creating your own oystercard:
 ```
 and you're good to go!
 
-### Commmands
+## Commmands
 
 ``` ruby
 > card.top_up(10) # add £10 to your balance
@@ -55,7 +56,7 @@ and you're good to go!
 > card.journey_history # return a list of past journeys
 ```
 
-### Rules
+## Rules
 
 - Your card must have enough money to touch in.
 - If you fail to touch in/out *at a station*, you will charged a penalty fare.
