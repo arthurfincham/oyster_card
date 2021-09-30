@@ -4,6 +4,9 @@
 
 &nbsp;
 
+# oyster_card
+#### *travel across London through IRB*
+
 ![](https://img.shields.io/github/last-commit/arthurfincham/oyster_card)
 ![](https://img.shields.io/github/languages/count/arthurfincham/oyster_card)
 ![](https://img.shields.io/github/languages/code-size/arthurfincham/oyster_card)
@@ -29,7 +32,7 @@ To start IRB and require the file in one go, navigate to the project's directory
  ```
 
 Begin by creating your own oystercard:
-``` bash
+``` ruby
 > card = Oystercard.new
 ```
 and you're good to go!
