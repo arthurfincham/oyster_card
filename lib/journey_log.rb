@@ -14,7 +14,15 @@ class JourneyLog
   end
 
   def finish(station)
-    @journeys.last.finish(station)
+    current_journey.finish(station)
+  end
+
+  def current_journey
+    incomplete_journey || @journey_class.new
+  end
+
+  def incomplete_journey
+    @journeys.reject(&:complete?).first
   end
 
 end
