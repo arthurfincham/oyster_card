@@ -1,7 +1,7 @@
 require 'journey_log'
 
 describe JourneyLog do
-    let(:journey){ double :journey}
+    let(:journey){ double :journey, complete?: false }
     let(:station){ double :station }
     let(:station2){ double :station2 }
     let(:journey_class){ double :journey_class, new: journey}
