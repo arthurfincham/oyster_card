@@ -19,18 +19,26 @@ class Journey
 
   def fare
     if complete?
-      FEE
+      calculate_fee
     else
-      FEE + PENALTY
+      PENALTY
     end
   end
 
+  
   def complete?
     if (@entry_station == nil) or (@exit_station == nil)
       false
     else
       true
     end
+  end
+  
+  private
+  def calculate_fee
+    a = @entry_station.zone
+    b = @exit_station.zone
+    (a - b).abs + 1
   end
 
   

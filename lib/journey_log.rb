@@ -16,7 +16,8 @@ class JourneyLog
   def finish(station)
     current_journey.finish(station)
   end
-
+  
+  private
   def current_journey
     incomplete_journey || @journey_class.new
   end

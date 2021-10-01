@@ -50,16 +50,18 @@ describe Journey do
   end
 
   describe '#fare' do
-
+    let(:z_station){double :z_station, zone: 1}
+    let(:z_station2){double :z_station2, zone: 3}
+    subject(:z_journey){described_class.new(z_station)}
 
     it 'deducts fare if journey is complete' do
-      subject.finish(station2)
-      expect(subject.fare).to eq Journey::FEE
+      subject.finish(z_station2)
+      expect(subject.fare).to eq 3
     end
 
     it 'deducts additional penalty if missing station' do
       subject.finish(nil)
-      expect(subject.fare).to eq Journey::FEE + Journey::PENALTY
+      expect(subject.fare).to eq Journey::PENALTY
     end
   end
 end

@@ -3,7 +3,7 @@
 require 'oystercard'
 
 describe Oystercard do
-  let(:station) { double :station }
+  let(:station) { double :station, zone: 1 } 
 
   context '#configuration' do
     it 'has default balance of 0' do
